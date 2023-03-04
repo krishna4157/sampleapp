@@ -23,12 +23,13 @@ class HomePage extends Component {
   }
 
   render() {
-    const { navigation, screenProps, restaurantDataList, loading } = this.props;
+    const { navigation, screenProps, restaurantDataList, loading, fetchRestaurantDetails } = this.props;
     return (
       <View style={styles.container}>
         <HomeScreen
           loading={loading}
           restaurantDataList={restaurantDataList}
+          fetchRestaurantDetails={fetchRestaurantDetails}
           screenProps={screenProps}
           navigation={navigation}
         />

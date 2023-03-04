@@ -7,10 +7,11 @@ import API from '../Api/quiries';
 export const fetchDetails = async () => {
     const response = await API.getRestarentsList();
     const responseData = response;
-    if(responseData.data.data.data){
+    if(responseData?.data?.data?.data){
         return responseData.data.data.data;
     } else {
-        throw new Error('Something Went Wrong!!');
+        // throw new Error('Something Went Wrong!!');
+        return [];
     }
 }
 

@@ -1,16 +1,11 @@
 // Import Dependencies
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Strings from './Strings';
+import { CustomText } from './CustomText';
 
 const LoginScreen = () => {
   /**
@@ -29,15 +24,23 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <Text style={styles.appTitleStyle}>{Strings.appName}</Text>
+      <CustomText style={styles.appTitleStyle}>{Strings.appName}</CustomText>
       <View style={styles.formContainerStyle}>
         <Formik
           validateOnChange={false}
           validateOnBlur={false}
           validationSchema={loginValidationSchema}
           initialValues={{ email: '', password: '' }}
-          onSubmit={values => {
-            navigation.navigate('HomeScreen');
+          onSubmit={(values, { resetForm }) => {
+            if (
+              values.email == 'krishna@123' &&
+              values.password == '12345678'
+            ) {
+              navigation.navigate('HomeScreen');
+            } else {
+              alert('Invalid Login Details');
+              resetForm((values = ''));
+            }
           }}>
           {({
             handleChange,
@@ -48,7 +51,9 @@ const LoginScreen = () => {
             touched,
           }) => (
             <>
-              <Text style={styles.titleStyle}>{Strings.userName}</Text>
+              <CustomText style={styles.titleStyle}>
+                {Strings.userName}
+              </CustomText>
 
               {/* Input UserName */}
               <TextInput
@@ -62,9 +67,13 @@ const LoginScreen = () => {
                 keyboardType="email-address"
               />
               {errors.email && touched.email && (
-                <Text style={styles.errorTextStyle}>{errors.email}</Text>
+                <CustomText style={styles.errorTextStyle}>
+                  {errors.email}
+                </CustomText>
               )}
-              <Text style={styles.titleStyle}>{Strings.password}</Text>
+              <CustomText style={styles.titleStyle}>
+                {Strings.password}
+              </CustomText>
 
               {/* Input password */}
               <TextInput
@@ -78,14 +87,18 @@ const LoginScreen = () => {
                 secureTextEntry
               />
               {errors.password && touched.password && (
-                <Text style={styles.errorTextStyle}>{errors.password}</Text>
+                <CustomText style={styles.errorTextStyle}>
+                  {errors.password}
+                </CustomText>
               )}
 
               {/* Login Button */}
               <TouchableOpacity
                 onPress={handleSubmit}
                 style={styles.buttonStyle}>
-                <Text style={styles.buttonTextStyle}>{Strings.loginText}</Text>
+                <CustomText style={styles.buttonTextStyle}>
+                  {Strings.loginText}
+                </CustomText>
               </TouchableOpacity>
             </>
           )}

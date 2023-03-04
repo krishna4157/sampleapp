@@ -1,6 +1,6 @@
 // Import Dependencies
 import React from 'react';
-import { Image, View, PermissionsAndroid, StyleSheet, Text } from 'react-native';
+import { Image, View, PermissionsAndroid, StyleSheet } from 'react-native';
 import MapView, { Callout } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import { Marker } from 'react-native-maps';
@@ -14,6 +14,7 @@ import PolylineComponent from './PolyLineComponent';
 import { Loader } from './Loader';
 import { Ratings } from './Ratings';
 import { SvgImageComponent } from './SvgImage';
+import { CustomText } from './CustomText';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const latitudeDelta = 0.0042;
@@ -91,6 +92,7 @@ class MapViewScreen extends React.Component {
 
   // Zooms the Map to current user location
   setCamRegion(region) {
+    const { item } = this.props;
     const coordinates = region;
     const radiusBoundaries = getBoundsOfDistance(coordinates, 3 * 1000);
 
@@ -102,6 +104,28 @@ class MapViewScreen extends React.Component {
         left: 10,
       },
     });
+
+    // const s= {
+    //   latitude: 16.987300922286927,
+    //   latitudeDelta: 0.0042,
+    //   longitude: 82.24079512059689,
+    //   longitudeDelta: 0.0021
+    // }
+    const baseLocation = {
+      longitude: parseFloat(item?.longitude),
+      latitude: parseFloat(item?.latitude),
+    };
+    const event = {
+      nativeEvent: {
+        coordinate: {
+          ...baseLocation,
+        },
+      },
+    };
+    this.setState({
+      showDirections: true,
+    });
+    this.setlocation(event);
   }
 
   // Gets Permission to access location
@@ -143,7 +167,6 @@ class MapViewScreen extends React.Component {
     this.setState({
       loading: true,
     });
-    this.getDirections(mapRegion.latitude, mapRegion.longitude);
 
     setTimeout(() => {
       this.showDirections();
@@ -162,14 +185,11 @@ class MapViewScreen extends React.Component {
       );
       let respJson = await resp.json();
 
-      let lengthInMeters = respJson.routes[0].summary.lengthInMeters;
-
       this.setState({
-        distanceToDestination: lengthInMeters,
         showDirections: true,
       });
 
-      let points = respJson.routes[0].legs[0].points;
+      let points = respJson?.routes[0]?.legs[0]?.points;
       let coords = points.map(point => {
         return {
           latitude: point.latitude,
@@ -224,7 +244,7 @@ class MapViewScreen extends React.Component {
           ref={map => {
             this.mapsRef = map;
           }}
-          onPress={event => this.setlocation(event)}
+          // onPress={event => this.setlocation(event)}
           showsUserLocation={true}
           showsPointsOfInterest={true}
           followsUserLocation={true}
@@ -254,7 +274,9 @@ class MapViewScreen extends React.Component {
                   />
                 </View>
                 <View style={styles.titleContainer}>
-                  <Text style={styles.titleStyle}>{item.title}</Text>
+                  <CustomText style={styles.titleStyle}>
+                    {item.title}
+                  </CustomText>
                   <Ratings rating={rating} floatValue={floatValue} size={15} />
                 </View>
               </Callout>

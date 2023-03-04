@@ -3,7 +3,6 @@ import React from 'react';
 import {
   Image,
   View,
-  Text,
   TouchableOpacity,
   FlatList,
   StyleSheet,
@@ -17,11 +16,13 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen');
 // Import Components
 import { Ratings } from './Ratings';
 import { ImageComponent } from './ImageComponent';
+import { CustomText } from './CustomText';
 
 class HomeScreen extends React.Component {
   state = {
     resList: [],
     loading: true,
+    spliceIndex: 1,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -63,7 +64,7 @@ class HomeScreen extends React.Component {
           </View>
           <View style={styles.secondContainer}>
             {/* title */}
-            <Text style={styles.titleStyle}>{item.title}</Text>
+            <CustomText style={styles.titleStyle}>{item.title}</CustomText>
 
             {/* Rating Component */}
             <Ratings rating={rating} floatValue={floatValue} size={15} />
@@ -86,16 +87,66 @@ class HomeScreen extends React.Component {
     );
   };
 
+  // Returns this UI Component when data is empty
+  EmptyComponent = () => {
+    const { fetchRestaurantDetails } = this.props;
+    return (
+      <View style={styles.emptyContainerStyle}>
+        <CustomText style={styles.noDataTextStyle}>
+          No Data Available at the moment
+        </CustomText>
+
+        <TouchableOpacity
+          style={styles.tryAgainStyle}
+          onPress={() => {
+            fetchRestaurantDetails();
+          }}>
+          <CustomText style={{ color: 'white' }}>Try Again</CustomText>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  // Returns this UI Component when data needs to load more
+  FooterComponent = () => {
+    const { resList, spliceIndex } = this.state;
+
+    if (spliceIndex < resList.length && resList.length > 0) {
+      return (
+        <View style={styles.footerContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({
+                spliceIndex: spliceIndex + 1,
+              });
+            }}>
+            <CustomText style={styles.loadMoreStyle}>Load More</CustomText>
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      return <></>;
+    }
+  };
+
   render() {
-    const { resList } = this.state;
+    const { resList, spliceIndex } = this.state;
     const { loading } = this.props;
+    const data = resList.length > 0 ? resList.slice(0, spliceIndex) : [];
 
     return (
       <View style={styles.mainContainer}>
         {loading ? (
           <Loader />
         ) : (
-          <FlatList data={resList} renderItem={this.renderItem} />
+          <FlatList
+            contentContainerStyle={styles.contentContainerStyle}
+            data={data}
+            renderItem={this.renderItem}
+            style={styles.flatStyle}
+            ListEmptyComponent={this.EmptyComponent}
+            ListFooterComponent={this.FooterComponent}
+          />
         )}
       </View>
     );
@@ -103,7 +154,23 @@ class HomeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  emptyContainerStyle: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadMoreStyle: { color: 'black' },
+  noDataTextStyle: { color: 'black', fontSize: 20, padding: 10 },
+  tryAgainStyle: { backgroundColor: '#0077b6', padding: 10, borderRadius: 10 },
+  footerContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 15,
+  },
   mainContainer: { flex: 1 },
+  flatStyle: { flex: 1, width: '100%', height: '100%', display: 'flex' },
+  contentContainerStyle: { flexGrow: 1 },
   cardStyle: {
     elevation: 5,
     backgroundColor: 'white',
