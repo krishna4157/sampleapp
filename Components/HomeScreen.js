@@ -9,10 +9,11 @@ import {
   StyleSheet,
 } from 'react-native';
 import Images from '../images/Images';
-import { Loader } from './Loader';
+import {Loader} from './Loader';
 
 // Import Components
-import { Ratings } from './Ratings';
+import {Ratings} from './Ratings';
+import {ImageComponent} from './ImageComponent';
 
 class HomeScreen extends React.Component {
   state = {
@@ -21,7 +22,7 @@ class HomeScreen extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { restaurantDataList } = this.props;
+    const {restaurantDataList} = this.props;
     if (prevProps.restaurantDataList != restaurantDataList) {
       this.setState({
         resList: restaurantDataList,
@@ -31,20 +32,20 @@ class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
-    const { restaurantDataList } = this.props;
+    const {restaurantDataList} = this.props;
     this.setState({
       resList: restaurantDataList,
       loading: false,
     });
   }
 
-  navigateToMaps = (item) => {
-    const { navigation } = this.props;
-    navigation.navigate('MapScreen', { item: item });
-  }
+  navigateToMaps = item => {
+    const {navigation} = this.props;
+    navigation.navigate('MapScreen', {item: item});
+  };
 
   // UI item of FlatList
-  renderItem = ({ item, index }) => {
+  renderItem = ({item, index}) => {
     const rating = parseInt(Math.floor(item.rating));
     const floatValue = (item.rating - rating) * 15;
     return (
@@ -52,8 +53,8 @@ class HomeScreen extends React.Component {
         <View style={styles.cardContainer}>
           <View style={styles.firstContainer}>
             {/* Restaurant Image */}
-            <Image
-              source={{ uri: item.images[0].url }}
+            <ImageComponent
+              uri={item.images[0]?.url}
               style={styles.imageStyle}
             />
           </View>
@@ -83,8 +84,8 @@ class HomeScreen extends React.Component {
   };
 
   render() {
-    const { resList } = this.state;
-    const { loading } = this.props;
+    const {resList} = this.state;
+    const {loading} = this.props;
 
     return (
       <View style={styles.mainContainer}>
@@ -99,7 +100,7 @@ class HomeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  mainContainer: { flex: 1 },
+  mainContainer: {flex: 1},
   cardStyle: {
     elevation: 5,
     backgroundColor: 'white',
@@ -109,17 +110,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 15,
   },
-  cardContainer: { flex: 1, flexDirection: 'row' },
+  cardContainer: {flex: 1, flexDirection: 'row'},
 
-  firstContainer: { flex: 1.5 },
+  firstContainer: {flex: 1.5},
   imageStyle: {
     height: 60,
     width: 60,
     overflow: 'hidden',
     borderRadius: 5,
   },
-  secondContainer: { flex: 3.5, alignSelf: 'center' },
-  titleStyle: { color: 'black', fontWeight: 'bold' },
+  secondContainer: {flex: 3.5, alignSelf: 'center'},
+  titleStyle: {color: 'black', fontWeight: 'bold'},
   thirdContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: 'green',
   },
-  mapButtonImage: { height: '100%', width: '100%' },
+  mapButtonImage: {height: '100%', width: '100%'},
 });
 
 export default HomeScreen;
