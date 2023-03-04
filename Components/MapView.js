@@ -247,7 +247,11 @@ class MapViewScreen extends React.Component {
               {/* Call Out Popup on Tap of Marker */}
               <Callout style={styles.callOutStyle}>
                 <View style={styles.imageContainer}>
-                  <SvgImageComponent uri={item?.images[0].url} size={40} />
+                  <SvgImageComponent
+                    uri={item?.images[0].url}
+                    size={40}
+                    round={true}
+                  />
                 </View>
                 <View style={styles.titleContainer}>
                   <Text style={styles.titleStyle}>{item.title}</Text>
@@ -278,7 +282,7 @@ const styles = StyleSheet.create({
     elevation: 1,
     shadowColor: 'black',
     flexDirection: 'row',
-    width: SCREEN_WIDTH / 2,
+    width: SCREEN_WIDTH / 1.5,
     flex: 1,
     display: 'flex',
     flexWrap: 'wrap',
@@ -287,11 +291,11 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   imageContainer: {
-    width: '20%',
     borderRadius: 40,
-    overflow: 'hidden',
+    flex: 1,
+    flexWrap: 'wrap',
   },
-  titleContainer: { paddingLeft: 10 },
+  titleContainer: { paddingLeft: 10, flex: 5 },
   titleStyle: { color: 'black' },
 });
 

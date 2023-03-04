@@ -1,14 +1,23 @@
+import { Image, View, PermissionsAndroid, StyleSheet, Text } from 'react-native';
 import { Svg, Image as SvgImage } from 'react-native-svg';
 
-export const SvgImageComponent = ({ uri, size }) => {
+export const SvgImageComponent = ({ uri, size, round }) => {
     return (
-        <Svg height={size} width={size}>
-            <SvgImage
-                preserveAspectRatio="xMidYMid slice"
-                height={size}
-                width={size}
-                href={{ uri: uri }}
-            />
-        </Svg>
+        <View
+            style={{
+                width: size,
+                height: size,
+                borderRadius: round ? size : 0,
+                overflow: 'hidden',
+            }}>
+            <Svg height={size} width={size}>
+                <SvgImage
+                    preserveAspectRatio="xMidYMid slice"
+                    height={size}
+                    width={size}
+                    href={{ uri: uri }}
+                />
+            </Svg>
+        </View>
     );
 };

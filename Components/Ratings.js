@@ -41,12 +41,8 @@ export const Ratings = ({ rating, floatValue, size }) => {
                 .map((v, i) => {
                     return (
                         <View key={i} style={styles.ratingViewContainer}>
-                            {/* <Image
-                                resizeMethod={'resize'}
-                                source={Images.starFill}
-                            /> */}
                             <View style={styles.starFillStyle}>
-                                <SvgImageComponent uri={fullStarUri} size={size} />
+                                <SvgImageComponent uri={fullStarUri} size={size} round={false} />
                             </View>
                         </View>
                     );
@@ -58,7 +54,7 @@ export const Ratings = ({ rating, floatValue, size }) => {
                         return (
                             <View key={i} style={styles.ratingViewContainer2}>
                                 <View style={styles.starFillStyle2}>
-                                    <SvgImageComponent uri={fullStarUri} size={size} />
+                                    <SvgImageComponent uri={fullStarUri} size={size} round={false} />
                                 </View>
                             </View>
                         );
@@ -69,7 +65,7 @@ export const Ratings = ({ rating, floatValue, size }) => {
                     .map((v, i) => {
                         return (
                             <View key={i} style={styles.emptyContainer}>
-                                <SvgImageComponent uri={StarEmptyUri} size={size} />
+                                <SvgImageComponent uri={StarEmptyUri} size={size} round={false} />
                             </View>
                         );
                     })}
