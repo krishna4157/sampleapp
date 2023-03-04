@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 
 const { default: Images } = require('../images/Images');
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 //Loader UI Component
 export const Loader = () => {
@@ -23,8 +22,8 @@ const styles = StyleSheet.create({
         flex: 1,
         position: 'absolute',
         zIndex: 1,
-        height: SCREEN_HEIGHT,
-        width: SCREEN_WIDTH,
+        height: '100%',
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
     },
