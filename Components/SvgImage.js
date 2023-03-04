@@ -1,6 +1,8 @@
-import { Image, View, PermissionsAndroid, StyleSheet, Text } from 'react-native';
+// Import Dependencies
+import { View } from 'react-native';
 import { Svg, Image as SvgImage } from 'react-native-svg';
 
+// Image Component to SVG Component due to compatibility issues in MapView
 export const SvgImageComponent = ({ uri, size, round }) => {
     return (
         <View
