@@ -1,7 +1,7 @@
 // Import Dependencies
 import React from 'react';
-import { Image, View, PermissionsAndroid, StyleSheet } from 'react-native';
-import MapView from 'react-native-maps';
+import { Image, View, PermissionsAndroid, StyleSheet, Text } from 'react-native';
+import MapView, { Callout } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import { Marker } from 'react-native-maps';
 import { Dimensions } from 'react-native';
@@ -12,6 +12,8 @@ import { getBoundsOfDistance } from 'geolib';
 // Import Components
 import PolylineComponent from './PolyLineComponent';
 import { Loader } from './Loader';
+import { Ratings } from './Ratings';
+import { SvgImageComponent } from './SvgImage';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const latitudeDelta = 0.0042;
@@ -199,10 +201,22 @@ class MapViewScreen extends React.Component {
 
   render() {
     const { loading, location, markedCoordinates, showDirections } = this.state;
+    const { item } = this.props;
+
+    const rating = parseInt(Math.floor(item.rating));
+    const floatValue = (item.rating - rating) * 15;
 
     return (
       <View style={styles.mainContainer}>
         <StatusBar />
+        <Image
+          source={{ uri: item.images[0].url }}
+          style={styles.renderDummyImage}
+        />
+
+        <Image source={Images.starFill} style={styles.renderDummyImage} />
+        <Image source={Images.starEmpty} style={styles.renderDummyImage} />
+
         {loading && <Loader />}
 
         {/* MapView Screen */}
@@ -222,18 +236,24 @@ class MapViewScreen extends React.Component {
           }}
           style={styles.mapViewStyle}
           showsTraffic={true}>
-            
           {/* Marker on MapView */}
           {markedCoordinates != '' && (
-            <Marker
-              key={'2'}
-              coordinate={markedCoordinates}
-              title={'Marked point'}
-              description={`longitude : ${markedCoordinates.longitude} lattitude : ${markedCoordinates.latitude} `}>
+            <Marker key={'2'} coordinate={markedCoordinates}>
               <Image
                 source={Images.markerImage}
                 style={styles.markedImageStyle}
               />
+
+              {/* Call Out Popup on Tap of Marker */}
+              <Callout style={styles.callOutStyle}>
+                <View style={styles.imageContainer}>
+                  <SvgImageComponent uri={item?.images[0].url} size={40} />
+                </View>
+                <View style={styles.titleContainer}>
+                  <Text style={styles.titleStyle}>{item.title}</Text>
+                  <Ratings rating={rating} floatValue={floatValue} size={15} />
+                </View>
+              </Callout>
             </Marker>
           )}
 
@@ -252,6 +272,27 @@ const styles = StyleSheet.create({
   imageStyle: { resizeMode: 'contain', height: '10%' },
   markedImageStyle: { height: 40, resizeMode: 'contain', width: 80 },
   mapViewStyle: { alignSelf: 'stretch', flex: 1 },
+  renderDummyImage: { width: 10, height: 10, position: 'absolute' },
+  callOutStyle: {
+    borderRadius: 10,
+    elevation: 1,
+    shadowColor: 'black',
+    flexDirection: 'row',
+    width: SCREEN_WIDTH / 2,
+    flex: 1,
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    alignSelf: 'center',
+    padding: 10,
+  },
+  imageContainer: {
+    width: '20%',
+    borderRadius: 40,
+    overflow: 'hidden',
+  },
+  titleContainer: { paddingLeft: 10 },
+  titleStyle: { color: 'black' },
 });
 
 export default MapViewScreen;

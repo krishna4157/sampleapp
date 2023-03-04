@@ -7,13 +7,16 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import Images from '../images/Images';
-import {Loader} from './Loader';
+import { Loader } from './Loader';
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen');
 
 // Import Components
-import {Ratings} from './Ratings';
-import {ImageComponent} from './ImageComponent';
+import { Ratings } from './Ratings';
+import { ImageComponent } from './ImageComponent';
 
 class HomeScreen extends React.Component {
   state = {
@@ -22,7 +25,7 @@ class HomeScreen extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const {restaurantDataList} = this.props;
+    const { restaurantDataList } = this.props;
     if (prevProps.restaurantDataList != restaurantDataList) {
       this.setState({
         resList: restaurantDataList,
@@ -32,7 +35,7 @@ class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
-    const {restaurantDataList} = this.props;
+    const { restaurantDataList } = this.props;
     this.setState({
       resList: restaurantDataList,
       loading: false,
@@ -40,12 +43,12 @@ class HomeScreen extends React.Component {
   }
 
   navigateToMaps = item => {
-    const {navigation} = this.props;
-    navigation.navigate('MapScreen', {item: item});
+    const { navigation } = this.props;
+    navigation.navigate('MapScreen', { item: item });
   };
 
   // UI item of FlatList
-  renderItem = ({item, index}) => {
+  renderItem = ({ item, index }) => {
     const rating = parseInt(Math.floor(item.rating));
     const floatValue = (item.rating - rating) * 15;
     return (
@@ -84,8 +87,8 @@ class HomeScreen extends React.Component {
   };
 
   render() {
-    const {resList} = this.state;
-    const {loading} = this.props;
+    const { resList } = this.state;
+    const { loading } = this.props;
 
     return (
       <View style={styles.mainContainer}>
@@ -100,7 +103,7 @@ class HomeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  mainContainer: {flex: 1},
+  mainContainer: { flex: 1 },
   cardStyle: {
     elevation: 5,
     backgroundColor: 'white',
@@ -110,17 +113,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 15,
   },
-  cardContainer: {flex: 1, flexDirection: 'row'},
+  cardContainer: { flex: 1, flexDirection: 'row' },
 
-  firstContainer: {flex: 1.5},
+  firstContainer: { flex: 1.5 },
   imageStyle: {
-    height: 60,
-    width: 60,
+    height: SCREEN_WIDTH / 6,
+    width: SCREEN_WIDTH / 6,
     overflow: 'hidden',
     borderRadius: 5,
   },
-  secondContainer: {flex: 3.5, alignSelf: 'center'},
-  titleStyle: {color: 'black', fontWeight: 'bold'},
+  secondContainer: { flex: 3.5, alignSelf: 'center' },
+  titleStyle: { color: 'black', fontWeight: 'bold' },
   thirdContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -128,13 +131,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   mapButton: {
-    height: 40,
-    width: 40,
+    height: SCREEN_WIDTH / 8,
+    width: SCREEN_WIDTH / 8,
     padding: 10,
     borderRadius: 5,
     backgroundColor: 'green',
   },
-  mapButtonImage: {height: '100%', width: '100%'},
+  mapButtonImage: { height: '100%', width: '100%' },
 });
 
 export default HomeScreen;

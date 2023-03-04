@@ -1,6 +1,6 @@
 // Import Dependencies
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 // Import Component
 import MapViewScreen from '../Components/MapView';
@@ -10,7 +10,7 @@ class MapViewPage extends Component {
         const { navigation, screenProps, route } = this.props;
         const item = route?.params?.item;
         return (
-            <View style={{ flex: 1 }}>
+            <View style={styles.container}>
                 <MapViewScreen
                     item={item}
                     screenProps={screenProps}
@@ -23,4 +23,6 @@ class MapViewPage extends Component {
 
 export default MapViewPage;
 
-
+const styles = StyleSheet.create({
+    container: { flex: 1 },
+});

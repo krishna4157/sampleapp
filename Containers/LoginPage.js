@@ -1,6 +1,6 @@
 // Import Dependencies
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 // Import Component
 import LoginScreen from '../Components/LoginScreen';
@@ -11,7 +11,7 @@ class LoginPage extends Component {
     render() {
         const { navigation, screenProps } = this.props;
         return (
-            <View style={{ flex: 1 }}>
+            <View style={styles.container}>
                 <LoginScreen screenProps={screenProps} navigation={navigation} />
             </View>
         );
@@ -19,3 +19,7 @@ class LoginPage extends Component {
 }
 
 export default LoginPage;
+
+const styles = StyleSheet.create({
+    container: { flex: 1 },
+});

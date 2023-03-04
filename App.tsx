@@ -5,17 +5,21 @@
  * @format
  */
 
-import React, { useEffect } from 'react';
-import { SafeAreaView, StatusBar, useColorScheme } from 'react-native';
+import React from 'react';
+import {
+  SafeAreaView,
+  StatusBar,
+  useColorScheme,
+  StyleSheet,
+} from 'react-native';
 import MainApp from './MainApp';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
-
   return (
     <>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={styles.container}>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
         <MainApp />
       </SafeAreaView>
@@ -24,3 +28,7 @@ function App(): JSX.Element {
 }
 
 export default App;
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+});

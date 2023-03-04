@@ -1,9 +1,14 @@
 // Import Dependencies
-import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-const { default: Images } = require('../images/Images');
+import { Image, View, StyleSheet } from 'react-native';
+import { SvgImageComponent } from './SvgImage';
+import FullStar from '../images/Star-fill.png';
+import StarEmpty from '../images/Star-empty.png';
+
 
 export const Ratings = ({ rating, floatValue, size }) => {
-    
+    const fullStarUri = Image.resolveAssetSource(FullStar).uri;
+    const StarEmptyUri = Image.resolveAssetSource(StarEmpty).uri;
+
     const styles = StyleSheet.create({
         mainContainer: { flexDirection: 'row', marginTop: 5 },
         ratingViewContainer: { height: size, width: size, flexWrap: 'wrap' },
@@ -36,11 +41,13 @@ export const Ratings = ({ rating, floatValue, size }) => {
                 .map((v, i) => {
                     return (
                         <View key={i} style={styles.ratingViewContainer}>
-                            <Image
-                                style={styles.starFillStyle}
+                            {/* <Image
                                 resizeMethod={'resize'}
                                 source={Images.starFill}
-                            />
+                            /> */}
+                            <View style={styles.starFillStyle}>
+                                <SvgImageComponent uri={fullStarUri} size={size} />
+                            </View>
                         </View>
                     );
                 })}
@@ -50,11 +57,9 @@ export const Ratings = ({ rating, floatValue, size }) => {
                     .map((v, i) => {
                         return (
                             <View key={i} style={styles.ratingViewContainer2}>
-                                <Image
-                                    style={styles.starFillStyle2}
-                                    resizeMethod={'resize'}
-                                    source={Images.starFill}
-                                />
+                                <View style={styles.starFillStyle2}>
+                                    <SvgImageComponent uri={fullStarUri} size={size} />
+                                </View>
                             </View>
                         );
                     })}
@@ -64,11 +69,7 @@ export const Ratings = ({ rating, floatValue, size }) => {
                     .map((v, i) => {
                         return (
                             <View key={i} style={styles.emptyContainer}>
-                                <Image
-                                    style={styles.starFillStyle}
-                                    resizeMethod={'resize'}
-                                    source={Images.starEmpty}
-                                />
+                                <SvgImageComponent uri={StarEmptyUri} size={size} />
                             </View>
                         );
                     })}
