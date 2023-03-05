@@ -7,11 +7,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   Keyboard,
+  Image,
 } from 'react-native';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Strings from './Strings';
 import { CustomText } from './CustomText';
+import Images from '../images/Images';
 
 const LoginScreen = props => {
   // React hooks for functional Component
@@ -53,6 +55,7 @@ const LoginScreen = props => {
 
   return (
     <View style={styles.mainContainer}>
+      {/* <Image style={{position:'absolute',height:'100%', width:'100%'}} resizeMode="cover" source={Images.background} /> */}
       <CustomText style={styles.appTitleStyle}>{Strings.appName}</CustomText>
       <View style={styles.formContainerStyle}>
         <Formik
@@ -89,7 +92,7 @@ const LoginScreen = props => {
                   setFieldValue('userName', e);
                   setFieldTouched('userName', false);
                 }}
-                onBlur={handleBlur('userName')}
+                // onBlur={handleBlur('userName')}
                 value={values.userName}
                 keyboardType="email-address"
               />
@@ -113,7 +116,7 @@ const LoginScreen = props => {
                   setFieldValue('password', e);
                   setFieldTouched('password', false);
                 }}
-                onBlur={handleBlur('password')}
+                // onBlur={handleBlur('password')}
                 value={values.password}
                 secureTextEntry
               />
@@ -148,21 +151,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
   },
-  appTitleStyle: { color: 'white', padding: 10, fontSize: 25 },
-  titleStyle: { paddingTop: 5, paddingBottom: 5, color: 'black' },
+  appTitleStyle: { color: 'white', padding: 25, fontSize: 25, alignSelf:'flex-start' },
+  titleStyle: { paddingTop: 5, paddingBottom: 5, color: 'white' },
   inputTextStyle: {
     padding: 5,
     borderWidth: 1,
     borderRadius: 10,
-    color: 'black',
+    color: 'white',
+    borderColor: 'rgba(255,255,255,0.2)'
   },
   buttonStyle: {
-    backgroundColor: '#0077b6',
+    backgroundColor: '#27dd93',
     width: '40%',
     alignItems: 'center',
-    alignSelf: 'center',
+    alignSelf: 'flex-end',
     margin: 10,
-    borderRadius: 30,
+    borderRadius: 10,
     padding: 5,
     marginTop: 30,
   },
@@ -171,9 +175,8 @@ const styles = StyleSheet.create({
   formContainerStyle: {
     justifyContent: 'center',
     padding: 15,
-    elevation: 5,
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(0,0,0,0.7)',
     width: '90%',
-    borderRadius: 5,
+    borderRadius: 15,
   },
 });
