@@ -23,7 +23,7 @@ const LoginScreen = props => {
    * The `yup` Login Form schema
    */
   const loginValidationSchema = Yup.object().shape({
-    userName: Yup.string()
+    username: Yup.string()
       .email('Please enter valid username')
       .required('UserName Address is Required'),
     password: Yup.string()
@@ -62,7 +62,7 @@ const LoginScreen = props => {
           validateOnChange={false}
           validateOnBlur={false}
           validationSchema={loginValidationSchema}
-          initialValues={{ userName: '', password: '' }}
+          initialValues={{ username: '', password: '' }}
           onSubmit={(values, { resetForm }) => {
             validateLogin(values);
           }}>
@@ -78,27 +78,27 @@ const LoginScreen = props => {
           }) => (
             <>
               <CustomText style={styles.titleStyle}>
-                {Strings.userName}
+                {Strings.username}
               </CustomText>
 
               {/* Input UserName */}
               <TextInput
                 style={styles.inputTextStyle}
                 maxLength={25}
-                name="userName"
+                name="username"
                 placeholder="please enter UserName"
                 placeholderTextColor={'grey'}
                 onChangeText={e => {
-                  setFieldValue('userName', e);
-                  setFieldTouched('userName', false);
+                  setFieldValue('username', e);
+                  setFieldTouched('username', false);
                 }}
-                // onBlur={handleBlur('userName')}
-                value={values.userName}
+                // onBlur={handleBlur('username')}
+                value={values.username}
                 keyboardType="email-address"
               />
-              {errors.userName && touched.userName && (
+              {errors.username && touched.username && (
                 <CustomText style={styles.errorTextStyle}>
-                  {errors.userName}
+                  {errors.username}
                 </CustomText>
               )}
               <CustomText style={styles.titleStyle}>

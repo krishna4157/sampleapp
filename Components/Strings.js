@@ -1,5 +1,5 @@
 export default Strings = {
-    userName : 'UserName',
+    username : 'UserName',
     password : 'Password',
     loginText : 'LOGIN',
     appName : 'APP NAME',

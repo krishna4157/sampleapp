@@ -16,7 +16,7 @@ export const fetchDetails = async () => {
 };
 
 export const loginDetails = async params => {
-  if (params?.userName?.toLowerCase() == 'krishna@123' && params?.password == 'Asdx#123') {
+  if (params?.username?.toLowerCase() == 'krishna@123' && params?.password == 'Asdx#123') {
     return true;
   } else {
     return false;
