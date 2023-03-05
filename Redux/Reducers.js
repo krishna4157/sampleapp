@@ -4,6 +4,7 @@ const initialState = {
   restaurantDataList: [],
   loading: false,
   loginState: false,
+  loginFailed : false
 };
 
 // Redux: Restaurant Reducer
@@ -21,11 +22,33 @@ const RestaurantReducer = (state = initialState, action) => {
         restaurantDataList: action.value,
       };
     }
-    case 'STORE_LOGIN_DATA': {
+    case 'LOGIN_SUCCESS': {
       return {
         ...state,
         loginData: action.value,
         loginState: true,
+        loginFailed: false,
+        loading : false
+      };
+    }
+    case 'INITIATE_LOGIN': {
+      return {
+        ...state,
+        loginData: {},
+        loginState: false,
+        loginFailed: false,
+        loading : true
+
+      };
+    }
+
+    case 'LOGIN_FAILED': {
+      return {
+        ...state,
+        loginData: {},
+        loginState: false,
+        loading : false,
+        loginFailed: true,
       };
     }
     default: {

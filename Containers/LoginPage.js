@@ -28,6 +28,7 @@ const mapStateToProps = state => {
         restaurantDataList: state.restaurantDataList.restaurantDataList,
         loading: state.restaurantDataList.loading,
         loginState: state.restaurantDataList.loginState,
+        loginFailed : state.restaurantDataList.loginFailed
     };
 };
 

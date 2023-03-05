@@ -1,8 +1,8 @@
 // Imports: Dependencies
-import { delay, takeEvery, takeLatest, put } from 'redux-saga/effects';
+import { delay, takeLatest, put, call } from 'redux-saga/effects';
 import API from '../Api/quiries';
 
-// Worker: Increase Counter Async (Delayed By 4 Seconds)
+// Worker: Fetch Details Async 
 
 export const fetchDetails = async () => {
   const response = await API.getRestarentsList();
@@ -25,7 +25,6 @@ export const loginDetails = async params => {
 
 function* fetchDataAsync() {
   try {
-    // Delay 4 Seconds
     yield put({
       type: 'START_LOADING',
       value: true,
@@ -49,28 +48,22 @@ function* fetchDataAsync() {
 
 function* fetchLoginData(action) {
   const { params } = action;
-
+  yield put({
+    type: 'INITIATE_LOGIN',
+  });
   try {
+    
     // Delay 4 Seconds
-    yield put({
-      type: 'START_LOADING',
-      value: true,
-    });
     yield delay(4000);
-    const data = loginDetails(params);
+    const data = yield call(loginDetails, params);
     if (!data) {
       yield put({
-        type: 'START_LOADING',
-        value: false,
+        type: 'LOGIN_FAILED',
       });
     } else {
       yield put({
-        type: 'STORE_LOGIN_DATA',
+        type: 'LOGIN_SUCCESS',
         value: data,
-      });
-      yield put({
-        type: 'START_LOADING',
-        value: false,
       });
     }
   } catch (error) {

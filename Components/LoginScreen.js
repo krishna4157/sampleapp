@@ -39,11 +39,13 @@ const LoginScreen = props => {
 
   React.useEffect(() => {
     if (props.loginState && loginFlow) {
+      setLoginFlow(false);
       navigation.navigate('HomeScreen');
-    } else if (loginFlow && !props.loginState) {
+    } else if (loginFlow && props.loginFailed) {
       alert('Invalid Login or Password');
+      setLoginFlow(false);
     }
-  }, [props.loginState]);
+  }, [props]);
 
   return (
     <View style={styles.mainContainer}>
