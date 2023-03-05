@@ -17,7 +17,7 @@ export const fetchDetails = async () => {
 
 export const loginDetails = async params => {
   if (params?.userName?.toLowerCase() == 'krishna@123' && params?.password == 'Asdx#123') {
-    return params;
+    return true;
   } else {
     return false;
   }
@@ -63,7 +63,7 @@ function* fetchLoginData(action) {
     } else {
       yield put({
         type: 'LOGIN_SUCCESS',
-        value: data,
+        value: params,
       });
     }
   } catch (error) {
