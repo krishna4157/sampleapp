@@ -1,13 +1,22 @@
 // Import Dependencies
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Keyboard,
+} from 'react-native';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Strings from './Strings';
 import { CustomText } from './CustomText';
 
-const LoginScreen = () => {
+const LoginScreen = props => {
+  // React hooks for functional Component
+  const navigation = useNavigation();
+  const [loginFlow, setLoginFlow] = React.useState(false);
   /**
    * The `yup` Login Form schema
    */
@@ -20,7 +29,21 @@ const LoginScreen = () => {
       .required('Password is required'),
   });
 
-  const navigation = useNavigation();
+  const validateLogin = async val => {
+    const { fetchLoginDetails, loginState } = props;
+
+    Keyboard.dismiss();
+    fetchLoginDetails(val);
+    setLoginFlow(true);
+  };
+
+  React.useEffect(() => {
+    if (props.loginState && loginFlow) {
+      navigation.navigate('HomeScreen');
+    } else if (loginFlow && !props.loginState) {
+      alert('Invalid Login or Password');
+    }
+  }, [props.loginState]);
 
   return (
     <View style={styles.mainContainer}>
@@ -32,15 +55,7 @@ const LoginScreen = () => {
           validationSchema={loginValidationSchema}
           initialValues={{ email: '', password: '' }}
           onSubmit={(values, { resetForm }) => {
-            if (
-              values.email == 'krishna@123' &&
-              values.password == '12345678'
-            ) {
-              navigation.navigate('HomeScreen');
-            } else {
-              alert('Invalid Login Details');
-              resetForm((values = ''));
-            }
+            validateLogin(values);
           }}>
           {({
             handleChange,
