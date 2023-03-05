@@ -94,7 +94,7 @@ class MapViewScreen extends React.Component {
   setCamRegion(region) {
     const { item } = this.props;
     const coordinates = region;
-    const radiusBoundaries = getBoundsOfDistance(coordinates, 3 * 1000);
+    const radiusBoundaries = getBoundsOfDistance(coordinates, 1 * 200);
 
     this.mapsRef.fitToCoordinates(radiusBoundaries, {
       edgePadding: {
