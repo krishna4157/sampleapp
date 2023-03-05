@@ -14,7 +14,7 @@ class PolylineComponent extends PureComponent {
                         lineJoin="miter"
                         strokeWidth={5}
                         lineCap={'round'}
-                        strokeColor="green"
+                        strokeColor="#27dd93"
                     />
                 );
             }

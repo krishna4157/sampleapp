@@ -21,12 +21,16 @@ const LoginScreen = props => {
    * The `yup` Login Form schema
    */
   const loginValidationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email('Please enter valid email')
-      .required('Email Address is Required'),
+    userName: Yup.string()
+      .email('Please enter valid username')
+      .required('UserName Address is Required'),
     password: Yup.string()
       .min(8, ({ min }) => `Password must be at least ${min} characters`)
-      .required('Password is required'),
+      .required('Password is required')
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        'Must Contain One Uppercase, One Lowercase, One Number and One Special Case Character',
+      ),
   });
 
   const validateLogin = async val => {
@@ -55,7 +59,7 @@ const LoginScreen = props => {
           validateOnChange={false}
           validateOnBlur={false}
           validationSchema={loginValidationSchema}
-          initialValues={{ email: '', password: '' }}
+          initialValues={{ userName: '', password: '' }}
           onSubmit={(values, { resetForm }) => {
             validateLogin(values);
           }}>
@@ -63,6 +67,8 @@ const LoginScreen = props => {
             handleChange,
             handleBlur,
             handleSubmit,
+            setFieldValue,
+            setFieldTouched,
             values,
             errors,
             touched,
@@ -76,16 +82,20 @@ const LoginScreen = props => {
               <TextInput
                 style={styles.inputTextStyle}
                 maxLength={25}
-                name="email"
-                placeholder="Email Address"
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
+                name="userName"
+                placeholder="please enter UserName"
+                placeholderTextColor={'grey'}
+                onChangeText={e => {
+                  setFieldValue('userName', e);
+                  setFieldTouched('userName', false);
+                }}
+                onBlur={handleBlur('userName')}
+                value={values.userName}
                 keyboardType="email-address"
               />
-              {errors.email && touched.email && (
+              {errors.userName && touched.userName && (
                 <CustomText style={styles.errorTextStyle}>
-                  {errors.email}
+                  {errors.userName}
                 </CustomText>
               )}
               <CustomText style={styles.titleStyle}>
@@ -97,8 +107,12 @@ const LoginScreen = props => {
                 style={styles.inputTextStyle}
                 maxLength={25}
                 name="password"
-                placeholder="Password"
-                onChangeText={handleChange('password')}
+                placeholder="please enter Password"
+                placeholderTextColor={'grey'}
+                onChangeText={e => {
+                  setFieldValue('password', e);
+                  setFieldTouched('password', false);
+                }}
                 onBlur={handleBlur('password')}
                 value={values.password}
                 secureTextEntry
@@ -128,8 +142,13 @@ const LoginScreen = props => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  mainContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  appTitleStyle: { color: 'black', padding: 10, fontSize: 25 },
+  mainContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'black',
+  },
+  appTitleStyle: { color: 'white', padding: 10, fontSize: 25 },
   titleStyle: { paddingTop: 5, paddingBottom: 5, color: 'black' },
   inputTextStyle: {
     padding: 5,

@@ -23,7 +23,7 @@ class HomeScreen extends React.Component {
   state = {
     resList: [],
     loading: true,
-    spliceIndex: 1,
+    spliceIndex: 2,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -199,11 +199,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   mapButton: {
-    height: SCREEN_WIDTH / 8,
-    width: SCREEN_WIDTH / 8,
+    height: SCREEN_WIDTH / 10,
+    width: SCREEN_WIDTH / 10,
     padding: 10,
     borderRadius: 5,
-    backgroundColor: 'green',
+    backgroundColor: '#27dd93',
   },
   mapButtonImage: { height: '100%', width: '100%' },
 });

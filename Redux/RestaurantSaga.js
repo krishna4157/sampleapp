@@ -16,7 +16,7 @@ export const fetchDetails = async () => {
 };
 
 export const loginDetails = async params => {
-  if (params.email == 'krishna@123' && params.password == '12345678') {
+  if (params?.userName?.toLowerCase() == 'krishna@123' && params?.password == 'Asdx#123') {
     return params;
   } else {
     return false;
@@ -52,7 +52,7 @@ function* fetchLoginData(action) {
     type: 'INITIATE_LOGIN',
   });
   try {
-    
+
     // Delay 4 Seconds
     yield delay(4000);
     const data = yield call(loginDetails, params);
