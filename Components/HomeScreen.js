@@ -17,6 +17,7 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen');
 import { Ratings } from './Ratings';
 import { ImageComponent } from './ImageComponent';
 import { CustomText } from './CustomText';
+import Strings from './Strings';
 
 class HomeScreen extends React.Component {
   state = {
@@ -93,7 +94,7 @@ class HomeScreen extends React.Component {
     return (
       <View style={styles.emptyContainerStyle}>
         <CustomText style={styles.noDataTextStyle}>
-          No Data Available at the moment
+          {Strings.noDataText}
         </CustomText>
 
         <TouchableOpacity
@@ -101,7 +102,7 @@ class HomeScreen extends React.Component {
           onPress={() => {
             fetchRestaurantDetails();
           }}>
-          <CustomText style={{ color: 'white' }}>Try Again</CustomText>
+          <CustomText style={{ color: 'white' }}>{Strings.tryAgain}</CustomText>
         </TouchableOpacity>
       </View>
     );
@@ -120,7 +121,7 @@ class HomeScreen extends React.Component {
                 spliceIndex: spliceIndex + 1,
               });
             }}>
-            <CustomText style={styles.loadMoreStyle}>Load More</CustomText>
+            <CustomText style={styles.loadMoreStyle}>{Strings.loadMore}</CustomText>
           </TouchableOpacity>
         </View>
       );
